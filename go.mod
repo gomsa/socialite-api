@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/golang/protobuf v1.3.1
-	github.com/gomsa/socialite v0.0.0-20190702015638-72b05e56a629
+	github.com/gomsa/socialite v0.0.0-20190708020854-201020becbc4
 	github.com/gomsa/tools v0.0.0-20190615000832-56bbd6704f6b
 	github.com/gomsa/user v0.0.0-20190701094113-3cfea4921994
 	github.com/jinzhu/gorm v1.9.10
