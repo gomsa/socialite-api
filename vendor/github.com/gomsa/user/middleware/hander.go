@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"context"
 	"errors"
 
@@ -46,7 +45,6 @@ func (h *Handler) Wrapper(fn server.HandlerFunc) server.HandlerFunc {
 				meta["service"] = req.Service()
 				meta["method"] = req.Method()
 				ctx = metadata.NewContext(ctx, meta)
-				fmt.Println(ctx,meta,authResp)
 				if h.IsPolicy(req) {
 					casbinResp, err := client.Casbin.Validate(ctx, &casbinPb.Request{})
 					if err != nil || casbinResp.Valid == false {

@@ -1,7 +1,6 @@
 package hander
 
 import (
-	"fmt"
 	"errors"
 	"context"
 
@@ -21,7 +20,6 @@ type User struct {
 func (srv *User) Build(ctx context.Context, req *pb.User, res *pb.Response) (err error) {
 	// meta["user_id"] 通过 meta 获取用户 id --- So this function needs token to use
 	meta, _ := metadata.FromContext(ctx)
-	fmt.Println(meta)
 	if userID, ok := meta["user_id"]; ok {
 		user := &userPB.User{
 			Id: userID,
