@@ -43,18 +43,22 @@ func (srv *User) Build(ctx context.Context, req *pb.User, res *pb.Response) (err
 
 // Delete 删除用户
 func (srv *User) Delete(ctx context.Context, req *pb.User, res *pb.Response) (err error) {
-	user := &userPB.User{
-		Id: req.Id,
-	}
-	if err != nil {
-		return err
-	}
-	userRes, err := client.User.Delete(ctx, user)
-	if err != nil {
-		return err
-	}
-	err = uitl.Data2Data(userRes, res)
-	if err != nil {
+	// meta["user_id"] 通过 meta 获取用户 id --- So this function needs token to use
+	meta, _ := metadata.FromContext(ctx)
+	if userID, ok := meta["user_id"]; ok {
+		user := &userPB.User{
+			Id: userID,
+		}
+		userRes, err := client.User.Delete(ctx, user)
+		if err != nil {
+			return err
+		}
+		err = uitl.Data2Data(userRes, res)
+		if err != nil {
+			return err
+		}
+	} else {
+		err = errors.New("删除用户绑定账号失败,未找到用户ID")
 		return err
 	}
 	return err
